@@ -7,6 +7,8 @@
 
 | 文档 | 内容 |
 |------|------|
+| **`HANDOFF.md`** | **交接与联调说明（推荐先读）** |
+| `RK3588_API_SPEC.md` | HarBeat App 接口规范 |
 | `cypher-feature-flows.md` | 三机架构、协议 P1–P8、端到端时间线 |
 | `team-rk3588-edge.md` | RK 任务 T1–T5 规范 |
 | `jetson-handoff-for-rk3588.md` | Jetson 接口、manifest、SessionEvent |
@@ -48,7 +50,7 @@
 
 | 组件 | 路径 | 端口/接口 | 状态 |
 |------|------|-----------|------|
-| **edge-agent** | `edge-agent/` | HTTP **9000**，WS **9001** `/ws` | 可用 |
+| **edge-agent** | `edge-agent/` | HTTP + WS **9000**（`/ws/control`） | 可用 |
 | **audio-engine** | `audio-engine/` | Unix `/tmp/cypher-audio.sock` | 可用 |
 | **input-daemon** | `input-daemon/` | 读 USB 九键 MYKB E9s | 可用 |
 | **sync-worker** | `sync-worker/` | HTTP **9100** | 可用 |
@@ -204,7 +206,7 @@ curl -X POST http://127.0.0.1:9000/next -H "Content-Type: application/json" -d '
 ### 7.1 网络
 
 - App 与 RK 在 **同一局域网**，直连 RK IP（不要用 127.0.0.1）。
-- 快链路目标：`http://<RK_LAN_IP>:9000`，WS：`ws://<RK_LAN_IP>:9001/ws`。
+- 快链路目标：`http://<RK_LAN_IP>:9000`，WS：`ws://<RK_LAN_IP>:9000/ws/control?token=...`（详见 `HANDOFF.md` §6）。
 
 ### 7.2 App → RK 接口（协议 P4）
 
